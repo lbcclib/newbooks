@@ -70,7 +70,7 @@ class Book
     @date_cataloged = @date_cataloged if @date_cataloged
 
     @shelving_location = entry.at_xpath(
-      './holdings:holdings/holdings:volumes/holdings:volume/holdings:label/holdings:copies/holdings:copy/holdings:location',
+      './holdings:holdings/holdings:volumes/holdings:volume/holdings:copies/holdings:copy/holdings:location',
       'holdings' => HOLDINGS_NAMESPACE
     )
     @shelving_location = @shelving_location.text if @shelving_location
@@ -145,11 +145,9 @@ class Department
   end
 
   def send_email
-    mail = Mail.new do
-      from    'libref@linnbenton.edu'
-      to      'sandbej@linnbenton.edu'
-      subject 'New book at the LBCC Library'
-    end
+    mail = Mail.new "To: #{@emails.join(', ')}\r\n"\
+                    "From: libref@linnbenton.edu\r\n"\
+                    'Subject: New books at the LBCC Library'
     mail.text_part = text_contents
     mail.html_part = html_contents
     mail.deliver!
