@@ -1,0 +1,17 @@
+<p>Dear colleagues in the {{ department_name }},</p>
+
+<p>We've recently added some books/materials to our collection that we think you might be interested in:</p>
+
+{% for book in books_of_interest %}
+  <a href="{{ book.uri }}">
+    <img src="{{ book.cover_image }}" alt="{{ book.title }}">
+  </a>
+{% endfor %}
+    
+<p>A more complete listing is available at {{ site_url }}.
+  Please contact <a href="mailto:hawkinr@linnbenton.edu">Richenda Hawkins</a>
+  if you would like us to purchase other materials for our collection.</p>
+    
+<p>Thanks,</p>  
+    
+<p>LBCC Library</p>

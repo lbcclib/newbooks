@@ -46,7 +46,10 @@ GEM
     listen (3.2.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
+    mail (2.7.1)
+      mini_mime (>= 0.1.1)
     mercenary (0.4.0)
+    mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minima (2.5.1)
       jekyll (>= 3.5, < 5.0)
@@ -98,6 +101,7 @@ PLATFORMS
 DEPENDENCIES
   jekyll (~> 4.1.1)
   jekyll-feed (~> 0.12)
+  mail
   minima (~> 2.5)
   nokogiri
   rubocop

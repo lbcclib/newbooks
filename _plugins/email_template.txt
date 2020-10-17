@@ -1,0 +1,15 @@
+Dear colleagues in the {{ department_name }},
+
+We've recently added some books/materials to our collection that we think you might be interested in:
+
+{% for book in books_of_interest %}
+* {{ book.title }}">
+{% endfor %}
+    
+A more complete listing is available at {{ site_url }}.
+Please contact Richenda Hawkins (hawkinr@linnbenton.edu)
+if you would like us to purchase other materials for our collection.
+    
+Thanks,
+    
+LBCC Library

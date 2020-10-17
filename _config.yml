@@ -18,16 +18,15 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: New Books at your Library
-email: your-email@example.com
+title: New Books at the LBCC Library
+email: libref@linnbenton.edu
 description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  Most of these titles can be requested through our Curbside Pickup service!
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: jekyllrb
-github_username:  jekyll
+url: "http://newbooks.lbcc.linnlibraries.org" # the base hostname & protocol for your site, e.g. http://example.com
+instagram_username: lbcc_library
+facebook_username: lbcclibrary
+github_username:  lbcclib
 
 # Build settings
 theme: minima
@@ -337,8 +336,8 @@ departments:
 
 min_items_per_email: 1
 max_items_per_email: 8
-email_sender: library@example.edu
-email_password: cool_password_here
+email_sender: libref@linnbenton.edu
+email_password: NOPE
 smtp_server: smtp.gmail.com
 smtp_port: 587
 link: http://notifications.lbcc.linnlibraries.org

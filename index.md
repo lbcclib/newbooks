@@ -11,7 +11,10 @@ title: New books
         <h2>{{ book.title }}</h2>
       </a>
       Call number: {{ book.call_number }}<br />
-      Shelving location: {{ book.call_number }}
+      Shelving location: {{ book.shelving_location }}<br />
+      {% if book.author %}
+        Author: {{ book.author }}<br />
+      {% endif %}
     </div>
   {% endfor %}
 </div>

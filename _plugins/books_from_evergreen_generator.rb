@@ -7,6 +7,7 @@ HOLDINGS_NAMESPACE = 'http://open-ils.org/spec/holdings/v1'
 require 'nokogiri'
 require 'open-uri'
 require 'net/http'
+require 'mail'
 
 # This Jekyll plugin fetches data about new books from
 # Evergreen and emails interested parties about the
@@ -15,8 +16,10 @@ class BooksFromEvergreenGenerator < Jekyll::Generator
   def generate(site)
     new_records = records_from_evergreen site.config
     site.data['books'] = new_records
-    departments = site.config['departments'].map { |department| Department.new department }
-    #departments.each { |department| Department.email_about site.data['books'] }
+    configure_mail site.config
+    site.config['departments']
+        .map { |department| Department.new department, site.config }
+        .each { |department| department.email_about site.data['books'] }
   end
 
   private
@@ -32,11 +35,23 @@ class BooksFromEvergreenGenerator < Jekyll::Generator
        .map { |entry| Book.new(entry) }
        .select(&:cover_image) # we only want books with cover images
   end
+
+  def configure_mail(config)
+    Mail.defaults do
+      delivery_method :smtp,
+                      address: config['smtp_server'],
+                      port: config['smtp_port'],
+                      user_name: config['email_sender'],
+                      password: config['email_password'],
+                      authentication: 'plain',
+                      enable_starttls_auto: true
+    end
+  end
 end
 
 # A new book
 class Book
-  attr_reader :cover_image
+  attr_reader :call_number, :cover_image
 
   def initialize(entry)
     @author = entry.at_xpath('./atom:author', 'atom' => ATOM_NAMESPACE)
@@ -75,10 +90,6 @@ class Book
     }
   end
 
-  def has_image?
-    @cover_image
-  end
-
   private
 
   def cover_url_for(isbns)
@@ -111,7 +122,59 @@ end
 
 # An LBCC department
 class Department
-  def initialize(config)
-    puts config
+  def initialize(department_config, site_config)
+    @name = department_config['name']
+    @emails = department_config['emails']
+    @regex = department_config['regex']
+    @site_config = site_config
+  end
+
+  def email_about(books)
+    @books_of_interest = books.select { |book| interested_in? book }
+    send_email if enough_books?
+  end
+
+  private
+
+  def interested_in?(book)
+    book.call_number.match? @regex
+  end
+
+  def enough_books?
+    @books_of_interest.count >= @site_config['min_items_per_email']
+  end
+
+  def send_email
+    mail = Mail.new do
+      from    'libref@linnbenton.edu'
+      to      'sandbej@linnbenton.edu'
+      subject 'New book at the LBCC Library'
+    end
+    mail.text_part = text_contents
+    mail.html_part = html_contents
+    mail.deliver!
+  end
+
+  def text_contents
+    contents = render_using_template 'email_template.txt'
+    text_part = Mail::Part.new
+    text_part.body = contents
+    text_part
+  end
+
+  def html_contents
+    contents = render_using_template 'email_template.html'
+    html_part = Mail::Part.new { content_type 'text/html; charset=UTF-8' }
+    html_part.body = contents
+    html_part
+  end
+
+  def render_using_template(template_file_name)
+    template = Liquid::Template.parse File.read "#{@site_config['plugins_dir']}/#{template_file_name}"
+    template.render(
+      'department_name' => @name,
+      'books_of_interest' => @books_of_interest.first(@site_config['max_items_per_email']),
+      'site_url' => @site_config['url']
+    )
   end
 end
