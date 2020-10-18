@@ -1,0 +1,8 @@
+Caption:
+Here are a few #NewBooks that we've added to our collection recently!
+
+#LinnBentonCommunityCollege #OregonLibraries #LibrariesOfInstagram #LinnBentonCC #ResearchHelp #TechHelp #AcademicLibrary #CommunityCollegeLibrary
+
+Alt text:
+A set of 6 books: {{ books | join: ", " }}
+

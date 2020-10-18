@@ -8,15 +8,17 @@ require 'nokogiri'
 require 'open-uri'
 require 'net/http'
 require 'mail'
+require 'rmagick'
 
 # This Jekyll plugin fetches data about new books from
 # Evergreen and emails interested parties about the
 # new books in their subject areas
 class BooksFromEvergreenGenerator < Jekyll::Generator
   def generate(site)
+    configure_mail site.config
     new_records = records_from_evergreen site.config
     site.data['books'] = new_records
-    configure_mail site.config
+    generate_montage site.data['books'], site.config['plugins_dir']
     site.config['departments']
         .map { |department| Department.new department, site.config }
         .each { |department| department.email_about site.data['books'] }
@@ -47,11 +49,33 @@ class BooksFromEvergreenGenerator < Jekyll::Generator
                       enable_starttls_auto: true
     end
   end
+
+  def generate_montage(books, dir)
+    selected_books = books.sample 6
+    list = Magick::ImageList.new
+    selected_books.each { |book| list.from_blob(URI.open(book.cover_image).read) }
+    montaged_images = list.montage do |image|
+      image.tile = '1x3', image.background_color = '#FDB913', self.geometry = '1080x1080+10+5'
+    end
+    montaged_images.write "#{dir}/instagram.png"
+    send_instagram_email(selected_books, dir)
+  end
+
+  def send_instagram_email(books, dir)
+    template = Liquid::Template.parse File.read "#{dir}/instagram_post.txt"
+    mail = Mail.new "To: sandbej@linnbenton.edu\r\n"\
+                    "From: libref@linnbenton.edu\r\n"\
+                    "Subject: New books instagram post\r\n"\
+                    "\r\n"\
+                    "#{template.render('books' => books.map(&:title))}"
+    mail.add_file "#{dir}/instagram.png"
+    mail.deliver!
+  end
 end
 
 # A new book
 class Book
-  attr_reader :call_number, :cover_image
+  attr_reader :call_number, :cover_image, :title
 
   def initialize(entry)
     @author = entry.at_xpath('./atom:author', 'atom' => ATOM_NAMESPACE)
