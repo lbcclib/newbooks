@@ -9,6 +9,7 @@ require 'open-uri'
 require 'net/http'
 require 'mail'
 require 'rmagick'
+require 'openlibrary/covers'
 
 # This Jekyll plugin fetches data about new books from
 # Evergreen and emails interested parties about the
@@ -117,25 +118,8 @@ class Book
   private
 
   def cover_url_for(isbns)
-    isbn_with_image = isbns.detect { |isbn| image_exists(isbn) }
-    ol_url(isbn_with_image) if isbn_with_image
-    isbn_with_image ? ol_url(isbn_with_image) : nil
-  end
-
-  def ol_url(isbn)
-    "https://covers.openlibrary.org/b/ISBN/#{normalize_isbn(isbn)}-M.jpg?default=false"
-  end
-
-  def image_exists(isbn)
-    return false if normalize_isbn(isbn).nil?
-
-    begin
-      response = Net::HTTP.get_response(URI.parse(ol_url(isbn)))
-    end
-    return false if response.body.include? 'not found'
-    return true if %w[200 301 302].include? response.code
-
-    false
+    image = Openlibrary::Covers::Image.new(isbns.map { |isbn| normalize_isbn(isbn) })
+    image.url
   end
 
   def normalize_isbn(isbn)
