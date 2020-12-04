@@ -9,7 +9,9 @@ GEM
     em-websocket (0.5.2)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
+    eventmachine (1.2.7)
     eventmachine (1.2.7-x64-mingw32)
+    ffi (1.13.1)
     ffi (1.13.1-x64-mingw32)
     forwardable-extended (2.6.0)
     http_parser.rb (0.6.0)
@@ -55,6 +57,8 @@ GEM
       jekyll (>= 3.5, < 5.0)
       jekyll-feed (~> 0.9)
       jekyll-seo-tag (~> 2.1)
+    nokogiri (1.10.10)
+      mini_portile2 (~> 2.4.0)
     nokogiri (1.10.10-x64-mingw32)
       mini_portile2 (~> 2.4.0)
     openlibrary-covers (0.1.0)
@@ -85,6 +89,8 @@ GEM
       parser (>= 2.7.1.4)
     ruby-progressbar (1.10.1)
     safe_yaml (1.0.5)
+    sassc (2.4.0)
+      ffi (~> 1.9)
     sassc (2.4.0-x64-mingw32)
       ffi (~> 1.9)
     terminal-table (1.8.0)
@@ -98,6 +104,7 @@ GEM
     wdm (0.1.1)
 
 PLATFORMS
+  ruby
   x64-mingw32
 
 DEPENDENCIES

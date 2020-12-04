@@ -32,7 +32,8 @@ class BooksFromEvergreenGenerator < Jekyll::Generator
           '/opac/extras/browse/atom-full/item-age'\
           "/#{config['org_unit']}/1"\
           "/#{config['num_items_to_fetch']}"\
-          '?status=0&status=1&status=6&status=7'
+          '?status=0&status=1&status=6&status=7'\
+          '&copyLocation=224&copyLocation=456&copyLocation=472'
     xml = Nokogiri::XML(URI.open(url))
     xml.xpath('//atom:entry', 'atom' => ATOM_NAMESPACE)
        .map { |entry| Book.new(entry) }

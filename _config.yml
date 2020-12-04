@@ -43,15 +43,15 @@ departments:
       - test@example.com
     regex: '^HF(56[0-9]{2})(\.|\s).*'
   -
-    name: Agriculture/Horticulture Department
-    regex: '^(HD140[1-9]|HD14[1-9][0-9]|HD1[5-9][0-9]{2}|HD2[01][0-9]{2}|HD220[0-9]|HD2210|S[0-9]+|SB[0-9]+|TJ148[0-9]|TJ149[0-6]|QK[0-9]+).*'
+    name: Agriculture Department
+    regex: '^(HD140[1-9]|HD14[1-9][0-9]|HD1[5-9][0-9]{2}|HD2[01][0-9]{2}|HD220[0-9]|HD2210|S[0-9]+|SF1?[0-9]{,2}|SF2[0-48-9][0-9]|SF27[6-9]|TJ148[0-9]|TJ149[0-6]).*'
     emails:
       - test@example.com
   -
     name: Anthropology Department
     emails:
       - test@example.com
-    regex: '^(GN[0-9]+|E[5-9][0-9])(\.|\s).*'
+    regex: '^(CC|GN|GR|GT|E[5-9][0-9](\.|\s)|PM[0-9]{1,3}(\.|\s)|PM[1-7][0-9]{3}(\.|\s)).*'
   -
     name: Automotive Technology Department
     emails:
@@ -66,7 +66,7 @@ departments:
     name: Biology Department
     emails:
       - test@example.com
-    regex: '^(GE[0-9]|QH[0-9]|QK[0-9]|QL[0-9]|QM[0-9]|QP[0-9]|QR[0-9]|TP248\.1[3-9]|TP248\.[2-5]|TP248\.6[0-5]).*'
+    regex: '^(GE[0-9]|Q[12]?[0-9]{,2}(\.|\s)|QH[0-9]|QK[0-9]|QL[0-9]|QM[0-9]|QP[0-9]|QR[0-9]|S59[0-9]|S6[0-5][0-9]|S66[0-7]|SB|SD|SH|TP248\.1[3-9]|TP248\.[2-5]|TP248\.6[0-5]).*'
   -
     name: Business Department
     emails:
@@ -83,11 +83,6 @@ departments:
       - test@example.com
     regex: '^(NK3[7-9][0-9]{2}|NK4[0-5][0-9]{2}|NK46[0-8][0-9]|NK469[0-4]|TT919|TT92[0-7])(\.|\s).*'
   -
-    name: Chemistry Department
-    emails:
-      - test@example.com
-    regex: '^(Q[1-9]|Q[1-9][0-9]|Q[12][0-9][0-9]|QD[0-9]+|TX545)(\.|\s).*'
-  -
     name: Communication Department
     emails:
       - test@example.com
@@ -96,7 +91,7 @@ departments:
     name: Computer Science Department
     emails:
       - test@example.com
-    regex: '^(HD69\.P75|HF5548\.[45]|QA75\.[5-9][0-9]*|QA76\.[0-8][0-9]*|QA76\.9[0-5][0-9]*|T56\..*|TK5105\.888[0-9]*)(\.|\s).*'
+    regex: '^(HD69\.P75|HF5548\.[45]|Q3[3-9][0-9]|QA7[56]\.[5-9][0-9]*|QA16[4-9]|T14\.5|T36|T57|T58\.[56][0-9]*|TJ211|TJ223|TK5105)(\.|\s).*'
   -
     name: Counseling Department
     emails:
@@ -111,7 +106,7 @@ departments:
     name: Culinary Arts Department
     emails:
       - test@example.com
-    regex: '^TX(537|545|63[1-9]|6[4-9][0-9]|[78][0-9]{2}|9[0-4][0-9]|95[0-3])(\.|\s).*'
+    regex: '^(SF2[56][0-9]|SF27[0-5]|TX(537|545|63[1-9]|6[4-9][0-9]|[78][0-9]{2}|9[0-4][0-9]|95[0-3]))(\.|\s).*'
   -
     name: Dental Assistant Department
     emails:
@@ -151,12 +146,7 @@ departments:
     name: English/Writing Department
     emails:
       - test@example.com
-    regex: '^(LB2360|PE140[2-9]|PE14[1-8][0-9]|PE149[0-7]|PN1009\.5|PN10[345][0-9]|PN335[5-9]|PN33[67][0-9]|PN338[0-5]|T11|T11\.[0-5]|ZA3075)(\.|\s).*'
-  -
-    name: Environmental Science Department
-    emails:
-      - test@example.com
-    regex: '^GE(\.|\s).*'
+    regex: '^(LB2360|P[0-9EN-Z]|T11(\.|\s)|T11\.[0-5]|ZA3075).*'
   -
     name: Equine Science Department
     emails:
@@ -168,10 +158,10 @@ departments:
       - test@example.com
     regex: '^(PN199[3-8]|TR84[5-9]|TR8[5-9][0-9]|TR9[01][0-9]|TR92[0-3])(\.|\s).*'
   -
-    name: Geology Department
+    name: Earth Sciences Department
     emails:
       - test@example.com
-    regex: '^QE[0-9]+.*'
+    regex: '^(Q[12]?[0-9]{,2}(\.|\s)|GE|QE|SD|SH|SK).*'
   -
     name: Health, Human Performance, Athletics and PE Department
     emails:
@@ -251,7 +241,7 @@ departments:
     name: Physical Sciences Department
     emails:
       - test@example.com
-    regex: '^Q[BC][0-9]+.*'
+    regex: '^(Q[12]?[0-9]{,2}(\.|\s)|Q[BCD]?[0-9]+|TX545(\.|\s)).*'
   -
     name: Polysomnographic Technology Department
     emails:
@@ -335,13 +325,13 @@ departments:
 
 
 min_items_per_email: 1
-max_items_per_email: 8
+max_items_per_email: 40
 email_sender: libref@linnbenton.edu
 email_password: NOPE
 smtp_server: smtp.gmail.com
 smtp_port: 587
 link: http://notifications.lbcc.linnlibraries.org
 
-num_items_to_fetch: 200
+num_items_to_fetch: 140
 opac_host: libcat.linnbenton.edu
 org_unit: LBCC
