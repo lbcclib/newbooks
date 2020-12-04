@@ -301,7 +301,7 @@ departments:
     name: Visual Communication Program
     emails:
       - test@example.com
-    regex: '^(NC99[7-9]|NC100[0-3]|N7433\.8|NC915\.C65|NK15[2-4][0-9]|Z246|Z250)(\.|\s).*'
+    regex: '^(NC99[7-9]|NC100[0-3]|N7433\.8|NC915\.C65|NK15[2-4][0-9]|TK5105\.888|Z246|Z250)(\.|\s).*'
   -
     name: Water, Environment and Technology Department
     emails:
