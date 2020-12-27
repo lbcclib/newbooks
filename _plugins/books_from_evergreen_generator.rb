@@ -88,8 +88,7 @@ class Book
       'holdings' => HOLDINGS_NAMESPACE
     ).text
 
-    @uri = 'https://libfind.linnbenton.edu:4430/catalog/'\
-           "#{entry.at_xpath('./atom:id', 'atom' => ATOM_NAMESPACE).text[/\d+/]}"
+    @uri = catalog_url_for entry.at_xpath('./atom:id', 'atom' => ATOM_NAMESPACE).text[/\d+/]
     @title = entry.at_xpath('./atom:title', 'atom' => ATOM_NAMESPACE).text
 
     @date_cataloged = entry.at_xpath('./atom:updated', 'atom' => ATOM_NAMESPACE)
@@ -121,6 +120,24 @@ class Book
   def cover_url_for(isbns)
     image = Openlibrary::Covers::Image.new(isbns.map { |isbn| normalize_isbn(isbn) })
     image.url
+  end
+
+  def catalog_url_for(id)
+    findit_url = "https://libfind.linnbenton.edu:4430/catalog/#{id}"
+    evergreen_url = "https://libcat.linnbenton.edu/eg/opac/record/#{id}"
+    findit_has(id) ? findit_url : evergreen_url
+  end
+
+  def findit_has(id)
+    response = nil
+    begin
+      Net::HTTP.start('libfind.linnbenton.edu', 80) do |http|
+        response = http.head "/catalog/#{id}"
+      end
+    rescue Errno::ECONNREFUSED, Net::OpenTimeout, SocketError
+      return false
+    end
+    response.code != '404'
   end
 
   def normalize_isbn(isbn)
