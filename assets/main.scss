@@ -1,16 +1,62 @@
 ---
 ---
 
-@import "{{ site.theme }}";
+$content-width: 90%;
 
-.grid { /* Masonry container */
-    column-count: 4;
-    column-gap: 1em;
+@import "minima";
+
+a, a:visited {
+  color: #005B94;
+}
+
+.post-content h2 {
+  font-size: 1.4em;
+  text-align: center;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grid-item {
+  margin: 12px auto;
+}
+
+.grid-item img {
+  width: 100%;
+}
+
+.hidden {
+  display: none;
+}
+
+#filter {
+  border: none;
+  border-bottom: 2px solid #FDB913;
+  color: #005B94;
+  font-size: 2em;
+}
+
+
+@media (max-width: 767px) {
+  .only-medium-and-larger {
+    display: none;
   }
-  
-  .grid-item { /* Masonry bricks or child elements */
-    background-color: #eee;
-    display: inline-block;
-    margin: 0 0 1em;
-    width: 100%;
+  .grid-item {
+    width: 30%;
   }
+}
+
+@media (min-width: 768px) {
+  .grid-item {
+    width: 21%;
+  }
+
+}
+
+@media only screen {
+  .post-title {
+    display: none;
+  }
+}

@@ -20,9 +20,10 @@ class BooksFromEvergreenGenerator < Jekyll::Generator
     new_records = records_from_evergreen site.config
     site.data['books'] = new_records
     generate_montage site.data['books'], site.config['plugins_dir']
-    site.config['departments']
-        .map { |department| Department.new department, site.config }
-        .each { |department| department.email_about site.data['books'] }
+    site.data['departments'] = site.config['departments']
+                                   .map { |department| Department.new department, site.config, site.data['books'] }
+                                   .select(&:enough_books?)
+    site.data['departments'].each(&:send_email)
   end
 
   private
@@ -77,7 +78,7 @@ end
 
 # A new book
 class Book
-  attr_reader :call_number, :cover_image, :title
+  attr_reader :call_number, :cover_image, :id, :title
 
   def initialize(entry)
     @author = entry.at_xpath('./atom:author', 'atom' => ATOM_NAMESPACE)
@@ -90,6 +91,7 @@ class Book
 
     @uri = catalog_url_for entry.at_xpath('./atom:id', 'atom' => ATOM_NAMESPACE).text[/\d+/]
     @title = entry.at_xpath('./atom:title', 'atom' => ATOM_NAMESPACE).text
+    @id = entry.at_xpath('./atom:id', 'atom' => ATOM_NAMESPACE).text.gsub(':', '-')
 
     @date_cataloged = entry.at_xpath('./atom:updated', 'atom' => ATOM_NAMESPACE)
     @date_cataloged = @date_cataloged if @date_cataloged
@@ -107,6 +109,7 @@ class Book
     {
       'author' => @author,
       'call_number' => @call_number,
+      'id' => @id,
       'uri' => @uri,
       'title' => @title,
       'date_cataloged' => @date_cataloged,
@@ -148,35 +151,38 @@ end
 
 # An LBCC department
 class Department
-  def initialize(department_config, site_config)
+  def initialize(department_config, site_config, books)
     @name = department_config['name']
     @emails = department_config['emails']
     @regex = department_config['regex']
     @site_config = site_config
-  end
-
-  def email_about(books)
     @books_of_interest = books.select { |book| interested_in? book }
-    send_email if enough_books?
   end
 
-  private
+  def send_email
+    mail = Mail.new "To: #{@emails.join(', ')}\r\n"\
+      "From: libref@linnbenton.edu\r\n"\
+      'Subject: New books at the LBCC Library'
+    mail.text_part = text_contents
+    mail.html_part = html_contents
+    mail.deliver!
+  end
 
-  def interested_in?(book)
-    book.call_number.match? @regex
+  def to_liquid
+    {
+      'name' => @name,
+      'book_ids' => @books_of_interest.map(&:id)
+    }
   end
 
   def enough_books?
     @books_of_interest.count >= @site_config['min_items_per_email']
   end
 
-  def send_email
-    mail = Mail.new "To: #{@emails.join(', ')}\r\n"\
-                    "From: libref@linnbenton.edu\r\n"\
-                    'Subject: New books at the LBCC Library'
-    mail.text_part = text_contents
-    mail.html_part = html_contents
-    mail.deliver!
+  private
+
+  def interested_in?(book)
+    book.call_number.match? @regex
   end
 
   def text_contents
