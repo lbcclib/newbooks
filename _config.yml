@@ -321,7 +321,7 @@ departments:
     name: Women's Studies Department
     emails:
       - test@example.com
-    regex: '^HQ(11[1-9]|1[2-9][0-9]|[2-9][0-9]{2}|1[0-9]{3})(\.|\s).*'
+    regex: '^HQ(11[1-9]|1[2-9][0-9]|[2-9][0-9]{2}|10[0-57-9][0-9]{2}|1[1-9][0-9]{2})(\.|\s).*'
 
 
 min_items_per_email: 1
