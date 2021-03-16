@@ -283,11 +283,6 @@ departments:
       - test@example.com
     regex: '^(RD\n+|QM\n+|QR[1-9]|QR[1-6][0-9]|QR7[0-4]|R72[3-6])(\.|\s).*'
   -
-    name: Theater Department
-    emails:
-      - test@example.com
-    regex: '^(PN15[3-9][0-9]|PN1[6-9][0-9]{2}|PN[23][0-9]{3}|PN4[0-2][0-9]{2}|PN43[0-4][0-9]|PN435[0-5]).*'
-  -
     name: VICE Council
     emails:
       - test@example.com
