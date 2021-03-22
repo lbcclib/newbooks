@@ -4,6 +4,8 @@ ATOM_NAMESPACE = 'http://www.w3.org/2005/Atom'
 DC_NAMESPACE = 'http://purl.org/dc/elements/1.1/'
 HOLDINGS_NAMESPACE = 'http://open-ils.org/spec/holdings/v1'
 
+require 'dotenv/load'
+require 'call_number_ranges'
 require 'nokogiri'
 require 'open-uri'
 require 'net/http'
@@ -46,8 +48,8 @@ class BooksFromEvergreenGenerator < Jekyll::Generator
       delivery_method :smtp,
                       address: config['smtp_server'],
                       port: config['smtp_port'],
-                      user_name: config['email_sender'],
-                      password: config['email_password'],
+                      user_name: ENV['SENDER_EMAIL'],
+                      password: ENV['SENDER_PASSWORD'],
                       authentication: 'plain',
                       enable_starttls_auto: true
     end
@@ -153,14 +155,14 @@ end
 class Department
   def initialize(department_config, site_config, books)
     @name = department_config['name']
-    @emails = department_config['emails']
-    @regex = department_config['regex']
+    @emails = ENV[department_config['emails']]
+    @discipline = department_config['discipline']
     @site_config = site_config
     @books_of_interest = books.select { |book| interested_in? book }
   end
 
   def send_email
-    mail = Mail.new "To: #{@emails.join(', ')}\r\n"\
+    mail = Mail.new "To: #{@emails}\r\n"\
       "From: libref@linnbenton.edu\r\n"\
       'Subject: New books at the LBCC Library'
     mail.text_part = text_contents
@@ -182,7 +184,7 @@ class Department
   private
 
   def interested_in?(book)
-    book.call_number.match? @regex
+    CallNumberRanges::CallNumber.disciplines(book.call_number).include? @discipline
   end
 
   def text_contents
