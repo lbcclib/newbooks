@@ -21,7 +21,7 @@
 title: New Books at the LBCC Library
 email: libref@linnbenton.edu
 description: >- # this means to ignore newlines until "baseurl:"
-  Most of these titles can be requested through our Curbside Pickup service!
+  Pick up one of these books today!https://libfind.linnbenton.edu:4430/catalog/98803
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://newbooks.lbcc.linnlibraries.org" # the base hostname & protocol for your site, e.g. http://example.com
 instagram_username: lbcc_library
