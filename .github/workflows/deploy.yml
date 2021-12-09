@@ -21,6 +21,58 @@ jobs:
       env:
         SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
         SENDER_PASSWORD: ${{ secrets.SENDER_PASSWORD }}
+        ACCOUNTING_EMAILS: ${{ secrets.ACCOUNTING_EMAILS }}
+        AGRICULTURE_EMAILS: ${{ secrets.AGRICULTURE_EMAILS }}
+        ANTH_EMAILS: ${{ secrets.ANTH_EMAILS }}
+        AUTO_TECH_EMAILS: ${{ secrets.AUTO_TECH_EMAILS }}
+        BIO_EMAILS: ${{ secrets.BIO_EMAILS }}
+        BUSINESS_EMAILS: ${{ secrets.BUSINESS_EMAILS }}
+        CFAR_EMAILS: ${{ secrets.CFAR_EMAILS }}
+        CERAMICS_EMAILS: ${{ secrets.CERAMICS_EMAILS }}
+        COMM_EMAILS: ${{ secrets.COMM_EMAILS }}
+        CS_EMAILS: ${{ secrets.CS_EMAILS }}
+        COUNSELING_EMAILS: ${{ secrets.COUNSELING_EMAILS }}
+        CJ_EMAILS: ${{ secrets.CJ_EMAILS }}
+        CULINARY_EMAILS: ${{ secrets.CULINARY_EMAILS }}
+        DENTAL_EMAILS: ${{ secrets.DENTAL_EMAILS }}
+        DI_EMAILS: ${{ secrets.DI_EMAILS }}
+        DRAFTING_EMAILS: ${{ secrets.DRAFTING_EMAILS }}
+        EDUCATION_EMAILS: ${{ secrets.EDUCATION_EMAILS }}
+        ELA_EMAILS: ${{ secrets.ELA_EMAILS }}
+        ENGINEERING_EMAILS: ${{ secrets.ENGINEERING_EMAILS }}
+        ENGLISH_EMAILS: ${{ secrets.ENGLISH_EMAILS }}
+        EQUINE_EMAILS: ${{ secrets.EQUINE_EMAILS }}
+        FILM_EMAILS: ${{ secrets.FILM_EMAILS }}
+        EARTH_EMAILS: ${{ secrets.EARTH_EMAILS }}
+        HHP_EMAILS: ${{ secrets.HHP_EMAILS }}
+        DIESEL_EMAILS: ${{ secrets.DIESEL_EMAILS }}
+        HISTORY_EMAILS: ${{ secrets.HISTORY_EMAILS }}
+        INTERNATIONAL_EMAILS: ${{ secrets.INTERNATIONAL_EMAILS }}
+        JOURNALISM_EMAILS: ${{ secrets.JOURNALISM_EMAILS }}
+        MACHINE_TOOL_EMAILS: ${{ secrets.MACHINE_TOOL_EMAILS }}
+        MATH_EMAILS: ${{ secrets.MATH_EMAILS }}
+        MECHATRONICS_EMAILS: ${{ secrets.MECHATRONICS_EMAILS }}
+        MA_EMAILS: ${{ secrets.MA_EMAILS }}
+        MUSIC_EMAILS: ${{ secrets.MUSIC_EMAILS }}
+        NDT_EMAILS: ${{ secrets.NDT_EMAILS }}
+        NURSING_EMAILS: ${{ secrets.NURSING_EMAILS }}
+        OTA_EMAILS: ${{ secrets.OTA_EMAILS }}
+        PHILOSOPHY_EMAILS: ${{ secrets.PHILOSOPHY_EMAILS }}
+        PHYSICAL_SCIENCES_EMAILS: ${{ secrets.PHYSICAL_SCIENCES_EMAILS }}
+        SLEEP_EMAILS: ${{ secrets.SLEEP_EMAILS }}
+        PSYCH_EMAILS: ${{ secrets.PSYCH_EMAILS }}
+        PUBLIC_SAFETY_EMAILS: ${{ secrets.PUBLIC_SAFETY_EMAILS }}
+        RELIGION_EMAILS: ${{ secrets.RELIGION_EMAILS }}
+        SBDC_EMAILS: ${{ secrets.SBDC_EMAILS }}
+        SOC_EMAILS: ${{ secrets.SOC_EMAILS }}
+        SURGICAL_EMAILS: ${{ secrets.SURGICAL_EMAILS }}
+        PACE_EMAILS: ${{ secrets.PACE_EMAILS }}
+        QUEER_STUDIES_EMAILS: ${{ secrets.QUEER_STUDIES_EMAILS }}
+        ART_EMAILS: ${{ secrets.ART_EMAILS }}
+        VISCOM_EMAILS: ${{ secrets.VISCOM_EMAILS }}
+        WEB_TEAM_EMAILS: ${{ secrets.WEB_TEAM_EMAILS }}
+        WELDING_EMAILS: ${{ secrets.WELDING_EMAILS }}
+        WOMENS_STUDIES_EMAILS: ${{ secrets.WOMENS_STUDIES_EMAILS }}
     - name: Deploy to github pages
       uses: peaceiris/actions-gh-pages@v3
       with:
