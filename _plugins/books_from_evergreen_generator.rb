@@ -68,7 +68,7 @@ class BooksFromEvergreenGenerator < Jekyll::Generator
 
   def send_instagram_email(books, dir)
     template = Liquid::Template.parse File.read "#{dir}/instagram_post.txt"
-    mail = Mail.new "To: sandbej@linnbenton.edu\r\n"\
+    mail = Mail.new "To: #{ENV['INSTAGRAM_POSTER_EMAIL']}\r\n"\
                     "From: libref@linnbenton.edu\r\n"\
                     "Subject: New books instagram post\r\n"\
                     "\r\n"\

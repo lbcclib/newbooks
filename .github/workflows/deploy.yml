@@ -21,6 +21,7 @@ jobs:
       env:
         SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
         SENDER_PASSWORD: ${{ secrets.SENDER_PASSWORD }}
+        INSTAGRAM_POSTER_EMAIL: ${{ secrets.INSTAGRAM_POSTER_EMAIL }}
         ACCOUNTING_EMAILS: ${{ secrets.ACCOUNTING_EMAILS }}
         AGRICULTURE_EMAILS: ${{ secrets.AGRICULTURE_EMAILS }}
         ANTH_EMAILS: ${{ secrets.ANTH_EMAILS }}
